@@ -1,0 +1,491 @@
+{
+  "projects": [
+    {
+      "name": "Nuxtjs",
+      "id": 1,
+      "issues": [
+        {
+          "createdBy": "jhoe",
+          "id": 1,
+          "descriptionText": "Hi,\n\nI\u0027m receiving the \"Can\u0027t display the data because Power BI can\u0027t determine the relationship between two or more fields.\" error message and I do not understand why. I have searched the net for help but can\u0027t find a post that answers my question.\n\nIt may well be a straight modelling restriction but best to check.\n\n\nI have two datasources (Sheet 1 and Sheet 2). Both are Excel files.",
+          "assignee": "btan",
+          "tag": [
+            "Frontend"
+          ],
+          "priority": 4,
+          "title": "Can\u0027t display the table",
+          "cnoimg": [
+            {
+              "comment_text": "Please find below links to the two .pbix files I\u0027ve created in an attempt toconquer this error I\u0027m receiving.",
+              "comment_timestamp": 1565194800,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 1,
+              "user": "liew"
+            },
+            {
+              "comment_text": "Try this https://www.dropbox.com/home?preview\u003dRelationships.pbix\n\nJust I removed the relationship between sheet1 and sheet1BridgingTable, sheet2 and sheet2BrdgingTable",
+              "comment_timestamp": 1567340520,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 2,
+              "user": "ang"
+            },
+            {
+              "comment_text": "Pic1",
+              "comment_timestamp": 1622473188,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 18,
+              "user": "btan"
+            },
+            {
+              "comment_text": "edit (uploaded pic)",
+              "comment_timestamp": 1622477562,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 19,
+              "user": "btan"
+            }
+          ],
+          "status": "In Progress",
+          "timestamp": 1565192640
+        },
+        {
+          "createdBy": "btan",
+          "id": 2,
+          "descriptionText": "Windows 10 Photo will not open a jpg file. I get \"We can\u0027t open this file.\" error message.\n\nThey\u0027re family photo that I sure would like to salvage.  Thanks",
+          "assignee": "jhoe",
+          "tag": [
+            "Backend"
+          ],
+          "priority": 3,
+          "title": "Can\u0027t open file",
+          "cnoimg": [
+            {
+              "comment_text": "I am having the same issue with a disc of photos from Christmas given to me by my sister. I have tried opening all of the photos with all of my available opening options and still get the same message as above poster. ",
+              "comment_timestamp": 1565280000,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 3,
+              "user": "liew"
+            },
+            {
+              "comment_text": "lad photos of windows 8 \u0026 10 are worst possible application ever developed!\n\njust change default view to \"windows photo viewer\" if you dont have any other application",
+              "comment_timestamp": 1565301300,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 4,
+              "user": "btan"
+            },
+            {
+              "comment_text": "Window 10 can but window vista does not work",
+              "comment_timestamp": 1565401300,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 5,
+              "user": "ang"
+            }
+          ],
+          "status": "Open",
+          "timestamp": 1565279040
+        },
+        {
+          "createdBy": "btan",
+          "id": 9,
+          "descriptionText": "Trying very hard right now",
+          "assignee": "",
+          "tag": [
+            ""
+          ],
+          "priority": 10,
+          "title": "Trying",
+          "cnoimg": [],
+          "status": "Open",
+          "timestamp": 1622292564
+        },
+        {
+          "createdBy": "btan",
+          "id": 10,
+          "descriptionText": "Trying",
+          "assignee": "",
+          "tag": [
+            "Frontend",
+            "Backend"
+          ],
+          "priority": 10,
+          "title": "Trial",
+          "cnoimg": [],
+          "status": "Open",
+          "timestamp": 1622973295
+        },
+        {
+          "createdBy": "btan",
+          "id": 11,
+          "descriptionText": "sad",
+          "assignee": "",
+          "tag": [
+            ""
+          ],
+          "priority": 10,
+          "title": "lol",
+          "cnoimg": [],
+          "status": "Open",
+          "timestamp": 1622973789
+        }
+      ],
+      "noOfIssue": 5
+    },
+    {
+      "name": "Vuejs",
+      "id": 2,
+      "issues": [
+        {
+          "createdBy": "btan",
+          "id": 3,
+          "descriptionText": "What is expected ?\nExpected correct scrollspy active link highlighting and all links work.\n\nWhat is actually happening?\nPage jumps to top before smooth scroll, which leads to weird links highlighting. Also, sometimes some links doesn\u0027t highlight (like Server Rendered in demo video)\n\nAdditional comments?\nDemonstration - https://imgur.com/a/GGvITVB",
+          "assignee": "ang",
+          "tag": [
+            "cmty:bug-report"
+          ],
+          "priority": 6,
+          "title": "Flash of unstyled content",
+          "cnoimg": [
+            {
+              "comment_text": "Here is what I am referring to: https://streamable.com/hkyg3 Apologies for not posting a video when creating the issue! ",
+              "comment_timestamp": 1570424400,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 6,
+              "user": "liew"
+            },
+            {
+              "comment_text": "Thanks for video, seems interesting, weirdly enough I couldn\u0027t reproduce.\nWill see what can be done.",
+              "comment_timestamp": 1570438800,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 7,
+              "user": "ang"
+            },
+            {
+              "comment_text": "Thanks for everything",
+              "comment_timestamp": 1570448800,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 8,
+              "user": "jhoe"
+            }
+          ],
+          "status": "Open",
+          "timestamp": 1569920400
+        },
+        {
+          "createdBy": "ang",
+          "id": 4,
+          "descriptionText": "When hitting the 404 page, the Nuxt layout isn\u0027t applied correctly.",
+          "assignee": "jhoe",
+          "tag": [
+            "Backend"
+          ],
+          "priority": 8,
+          "title": "User is \"trapped\" on 404 page",
+          "cnoimg": [
+            {
+              "comment_text": "Still a problem. ",
+              "comment_timestamp": 1570525200,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 9,
+              "user": "btan"
+            },
+            {
+              "comment_text": "/cc @clarkdo",
+              "comment_timestamp": 1570536000,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 10,
+              "user": "ang"
+            }
+          ],
+          "status": "Closed",
+          "timestamp": 1570507200
+        },
+        {
+          "createdBy": "btan",
+          "id": 12,
+          "descriptionText": "lol",
+          "assignee": "",
+          "tag": [
+            "test"
+          ],
+          "priority": 10,
+          "title": "Title",
+          "cnoimg": [],
+          "status": "In Progress",
+          "timestamp": 1623248869
+        }
+      ],
+      "noOfIssue": 3
+    },
+    {
+      "name": "Reactjs",
+      "id": 3,
+      "issues": [
+        {
+          "createdBy": "liew",
+          "id": 5,
+          "descriptionText": "What is expected ?\nThere is no flash of unstyled content\n\nWhat is actually happening?\nThere is a brief flash of unstyled content\n\nAdditional comments? \nDoesn\u0027t occur in Chrome",
+          "assignee": "btan",
+          "tag": [
+            "cmty:bug-report"
+          ],
+          "priority": 1,
+          "title": "Flash of unstyled content",
+          "cnoimg": [
+            {
+              "comment_text": "To: https://streamable.com/hkyg3 Apologies for not posting a video when creating the issue!",
+              "comment_timestamp": 1567854000,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 11,
+              "user": "liew"
+            },
+            {
+              "comment_text": "Thanks for video, seems interesting, weirdly enough I couldn\u0027t reproduce.\nWill see what can be done.",
+              "comment_timestamp": 1583855766,
+              "react": [
+                {
+                  "reaction": "Angry",
+                  "count": 0
+                },
+                {
+                  "reaction": "Happy",
+                  "count": 0
+                },
+                {
+                  "reaction": "Thumbs Up",
+                  "count": 0
+                }
+              ],
+              "comment_id": 12,
+              "user": "ang"
+            }
+          ],
+          "status": "Open",
+          "timestamp": 1567339200
+        },
+        {
+          "createdBy": "btan",
+          "id": 13,
+          "descriptionText": "there is an error",
+          "assignee": "ang",
+          "tag": [
+            ""
+          ],
+          "priority": 2,
+          "title": "error",
+          "cnoimg": [],
+          "status": "Open",
+          "timestamp": 1623248988
+        },
+        {
+          "createdBy": "jhoe",
+          "id": 14,
+          "descriptionText": "There is a bug. Need help.",
+          "assignee": "",
+          "tag": [
+            "backend"
+          ],
+          "priority": 3,
+          "title": "Bug",
+          "cnoimg": [],
+          "status": "Open",
+          "timestamp": 1623302857
+        }
+      ],
+      "noOfIssue": 2
+    }
+  ],
+  "users": [
+    {
+      "password": "password",
+      "userid": 1,
+      "points": 0,
+      "username": "jhoe"
+    },
+    {
+      "password": "password",
+      "userid": 2,
+      "points": 0,
+      "username": "btan"
+    },
+    {
+      "password": "password",
+      "userid": 3,
+      "points": 0,
+      "username": "liew"
+    },
+    {
+      "password": "password",
+      "userid": 4,
+      "points": 0,
+      "username": "ang"
+    }
+  ]
+}

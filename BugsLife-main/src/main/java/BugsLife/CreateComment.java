@@ -1,0 +1,486 @@
+package BugsLife;
+
+import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.Stack;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+
+public class CreateComment extends javax.swing.JDialog {
+
+    /**
+     * Creates new form CreateComment
+     */
+    private static String imageFileName = "";
+    private int projectIndex, issueId;
+    private Stack<String> undoStack = new Stack<>();
+    private Stack<String> redoStack = new Stack<>();
+    private CommentsDAO commentDAO;
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    /**
+     * Set image file name of createComment frame
+     * 
+     * @param imageFileName image file name of picture commented by user
+     */
+    public static void setImageFileName(String imageFileName) {
+        CreateComment.imageFileName = imageFileName;
+    }
+
+    public CreateComment(java.awt.Frame parent, boolean modal, int projectIndex, int issueId) throws SQLException {
+        super(parent, modal);
+        initComponents();
+        this.projectIndex = projectIndex;
+        this.issueId = issueId;
+        this.commentDAO = new CommentsDAO();
+
+        //set image for the undo and redo button
+        scaleImage();
+
+        //set undo and redo button to not enabled
+        setButton();
+
+        //adds key listener to jtextArea1 to detect keyboard entries
+        addKeyListener();
+
+        //sets layout
+        this.setLayout(new java.awt.BorderLayout());
+        this.add(jPanel1, java.awt.BorderLayout.CENTER);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
+        //starts the SwingWorker thread
+        startThread();
+    }
+
+    //Scales the image of the undo and redo icon
+    private void scaleImage() {
+        ImageIcon icon = new ImageIcon("undo.png");
+        Image img = icon.getImage();
+        Image newImg = img.getScaledInstance(Undo.getWidth() - 5, Undo.getHeight(), Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newImg);
+        Undo.setIcon(icon);
+
+        icon = new ImageIcon("redo.png");
+        img = icon.getImage();
+        newImg = img.getScaledInstance(Redo.getWidth() - 5, Redo.getHeight(), Image.SCALE_SMOOTH);
+        icon = new ImageIcon(newImg);
+        Redo.setIcon(icon);
+    }
+
+    /**
+     * Set the undo and redo button to not enabled
+     * Add empty string to undoStack so that its default size is 1
+     */
+    private void setButton() {
+        Redo.setEnabled(false);
+        Undo.setEnabled(false);
+        undoStack.add("");
+    }
+
+    //start the SwingWorker thread
+    private void startThread() {
+        //initialize new SwingWorker
+        SwingWorker sw = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                //constantly runs the SwingWorker thread in background as long is jTextArea is showing
+                while (jTextArea1.isShowing()) {
+                    try {
+                        //pause for 1000 milliseconds
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(CreateComment.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    update();
+                }
+                return null;
+            }
+        ;
+        };
+        sw.execute();
+    }
+
+    //Updates after each interation of SwingWorker thread
+    private void update() {
+        String text = jTextArea1.getText();
+
+        //if the top of undoStack is not equal to text during the update
+        if (!undoStack.peek().equals(jTextArea1.getText())) {
+            //add the text into the stack
+            undoStack.add(text);
+        }
+
+        //if size > 1 (since size = 1 is default)
+        if (undoStack.size() > 1) {
+            //set enabled to true
+            Undo.setEnabled(true);
+        }
+    }
+
+    private void addKeyListener() {
+        jTextArea1.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                //clears the redo stack if keyboard is typed
+                redoStack.clear();
+                Redo.setEnabled(false);
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                //no implementation
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //no implementation
+            }
+        });
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        Cancel = new javax.swing.JButton();
+        Post = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        Upload = new javax.swing.JButton();
+        Undo = new javax.swing.JButton();
+        Redo = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setSize(new java.awt.Dimension(920, 370));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Yu Gothic UI", 0, 16)); // NOI18N
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        Cancel.setBackground(new java.awt.Color(0, 153, 255));
+        Cancel.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 13)); // NOI18N
+        Cancel.setForeground(new java.awt.Color(255, 255, 255));
+        Cancel.setText("Cancel");
+        Cancel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Cancel.setMaximumSize(new java.awt.Dimension(59, 27));
+        Cancel.setMinimumSize(new java.awt.Dimension(59, 27));
+        Cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelActionPerformed(evt);
+            }
+        });
+
+        Post.setBackground(new java.awt.Color(0, 153, 255));
+        Post.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 13)); // NOI18N
+        Post.setForeground(new java.awt.Color(255, 255, 255));
+        Post.setText("Post");
+        Post.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Post.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PostMouseClicked(evt);
+            }
+        });
+        Post.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PostActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 20)); // NOI18N
+        jLabel1.setText("Write your comment");
+
+        Upload.setBackground(new java.awt.Color(0, 153, 255));
+        Upload.setFont(new java.awt.Font("Yu Gothic UI Semibold", 1, 13)); // NOI18N
+        Upload.setForeground(new java.awt.Color(255, 255, 255));
+        Upload.setText("Upload a picture");
+        Upload.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Upload.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UploadMouseClicked(evt);
+            }
+        });
+
+        Undo.setBackground(new java.awt.Color(204, 204, 204));
+        Undo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Undo.setFocusable(false);
+        Undo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UndoMouseClicked(evt);
+            }
+        });
+        Undo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UndoActionPerformed(evt);
+            }
+        });
+
+        Redo.setBackground(new java.awt.Color(204, 204, 204));
+        Redo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Redo.setFocusable(false);
+        Redo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RedoMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(Post, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Upload, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Undo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Redo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Undo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Redo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Post, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Upload)
+                    .addComponent(Cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {Cancel, Post, Upload});
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void PostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PostActionPerformed
+        if (jTextArea1.getText().replaceAll("\\s", "").equals("")) {
+            //show error emssage if comment text is empty
+            JOptionPane.showMessageDialog(null, "Warning! Comment must be non-empty to be posted", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //get current timestamp at which comment is posted
+            Date date = new Date();
+            long currentTimeStamp = date.getTime() / 1000L;
+            
+            //initialize new comment
+            //id = 0 because database will auto increment
+            Comment newComment = new Comment(0, jTextArea1.getText(), currentTimeStamp, Login.getUsername());
+            
+            //if there is image uploaded
+            if (!imageFileName.equals("")) {
+                try {
+                    InputStream in = new FileInputStream(imageFileName);
+                    commentDAO.addComment(newComment, issueId, (FileInputStream) in);
+                    JOptionPane.showMessageDialog(null, "Your comment has been posted");
+                    UsersDAO userdao=new UsersDAO();
+                    int id=Login.userID;
+                    UsersDAO dao=new UsersDAO();
+                    dao.updatePoints(1, id);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(CreateComment.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateComment.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } 
+            
+            //if no image uploaded
+            else {
+                try {
+                    commentDAO.addComment(newComment, issueId);
+                    JOptionPane.showMessageDialog(null, "Your comment has been posted");
+                    UsersDAO userdao=new UsersDAO();
+                    int id=Login.userID;
+                    UsersDAO dao=new UsersDAO();
+                    dao.updatePoints(1, id);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CreateComment.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            //clear the image
+            imageFileName = "";
+            dispose();
+        }
+    }//GEN-LAST:event_PostActionPerformed
+
+    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
+        //clear image filename
+        imageFileName = "";
+        dispose();
+    }//GEN-LAST:event_CancelActionPerformed
+
+    private void UploadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UploadMouseClicked
+        //create new instance of addImage
+        new AddImage(null, false, imageFileName);
+    }//GEN-LAST:event_UploadMouseClicked
+
+    private void PostMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PostMouseClicked
+
+    }//GEN-LAST:event_PostMouseClicked
+
+    private void UndoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UndoMouseClicked
+        //if undoStack size > 1 (since size = 1 is default)
+        if (undoStack.size() > 1) {
+            //if top of undoStack is not equal to text
+            if (!undoStack.peek().equals(jTextArea1.getText())) {
+                //adds the text into the undoStack
+                undoStack.add(jTextArea1.getText());
+            }
+            //pops the undoStack and add into redoStack
+            redoStack.add(undoStack.pop());
+
+            //set the Redo button as enabled
+            Redo.setEnabled(true);
+
+            //sets the text to top of undoStack
+            jTextArea1.setText(undoStack.peek());
+        }
+
+        //if undoStack size = 1, set enabled as false 
+        if (undoStack.size() == 1) {
+            Undo.setEnabled(false);
+        } else {
+            Undo.setEnabled(true);
+        }
+    }//GEN-LAST:event_UndoMouseClicked
+
+    private void RedoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RedoMouseClicked
+        //if redoStack is not empty
+        if (!redoStack.isEmpty()) {
+            //add top of redoStack to undoStack and set text as top of redoStack
+            undoStack.add(redoStack.peek());
+            Undo.setEnabled(true);
+            jTextArea1.setText(redoStack.pop());
+        }
+        //if redoStack empty set enabled as false
+        if (redoStack.isEmpty()) {
+            Redo.setEnabled(false);
+        }
+    }//GEN-LAST:event_RedoMouseClicked
+
+    private void UndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UndoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UndoActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        CreateComment.setImageFileName("");
+    }//GEN-LAST:event_formWindowClosed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(CreateComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(CreateComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(CreateComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(CreateComment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+//                CreateComment dialog = new CreateComment(new javax.swing.JFrame(), true, 1, 1);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Cancel;
+    private javax.swing.JButton Post;
+    private javax.swing.JButton Redo;
+    private javax.swing.JButton Undo;
+    private javax.swing.JButton Upload;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    // End of variables declaration//GEN-END:variables
+}
